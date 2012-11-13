@@ -91,7 +91,7 @@ Public Class frmMain
     End Sub
 
     Private Sub bwCombine_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles bwCombine.ProgressChanged
-        lvFiles.Items(e.ProgressPercentage).SubItems(4).Text = "Done"
+        lvFiles.Items(e.ProgressPercentage).SubItems.Add("Done")
     End Sub
 
     Private Sub bwCombine_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bwCombine.RunWorkerCompleted
@@ -102,5 +102,25 @@ Public Class frmMain
         End If
 
         outputPdf.Save(sfdOutput.FileName)
+
+        MsgBox("Combine Complete!", MsgBoxStyle.Information)
+    End Sub
+
+    Private Sub tmi0_Click(sender As ToolStripMenuItem, e As System.EventArgs) Handles tmi0.Click, tmi180.Click, tmi90ccw.Click, tmi90cw.Click
+
+        If lvFiles.SelectedIndices.Count = 0 Then
+            Exit Sub
+        End If
+
+        Select Case sender.Name
+            Case "tmi0"
+                lvFiles.Items(lvFiles.SelectedIndices(0)).SubItems(2).Text = "0"
+            Case "tmi90cw"
+                lvFiles.Items(lvFiles.SelectedIndices(0)).SubItems(2).Text = "90"
+            Case "tmi180"
+                lvFiles.Items(lvFiles.SelectedIndices(0)).SubItems(2).Text = "180"
+            Case "tmi90ccw"
+                lvFiles.Items(lvFiles.SelectedIndices(0)).SubItems(2).Text = "270"
+        End Select
     End Sub
 End Class

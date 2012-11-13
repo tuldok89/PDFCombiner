@@ -33,10 +33,10 @@ Partial Class frmMain
         Me.chStatus = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.cmsListView = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.RotationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DegreesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ClockwiseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CounterclockwiseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DegreesToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmi0 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmi90cw = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmi90ccw = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmi180 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnExit = New System.Windows.Forms.Button()
@@ -113,38 +113,38 @@ Partial Class frmMain
         '
         Me.cmsListView.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RotationToolStripMenuItem})
         Me.cmsListView.Name = "cmsListView"
-        Me.cmsListView.Size = New System.Drawing.Size(120, 26)
+        Me.cmsListView.Size = New System.Drawing.Size(153, 48)
         '
         'RotationToolStripMenuItem
         '
-        Me.RotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem, Me.ClockwiseToolStripMenuItem, Me.CounterclockwiseToolStripMenuItem, Me.DegreesToolStripMenuItem1})
+        Me.RotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmi0, Me.tmi90cw, Me.tmi90ccw, Me.tmi180})
         Me.RotationToolStripMenuItem.Name = "RotationToolStripMenuItem"
-        Me.RotationToolStripMenuItem.Size = New System.Drawing.Size(119, 22)
+        Me.RotationToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.RotationToolStripMenuItem.Text = "Rotation"
         '
-        'DegreesToolStripMenuItem
+        'tmi0
         '
-        Me.DegreesToolStripMenuItem.Name = "DegreesToolStripMenuItem"
-        Me.DegreesToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
-        Me.DegreesToolStripMenuItem.Text = "0 Degrees"
+        Me.tmi0.Name = "tmi0"
+        Me.tmi0.Size = New System.Drawing.Size(188, 22)
+        Me.tmi0.Text = "0 Degrees"
         '
-        'ClockwiseToolStripMenuItem
+        'tmi90cw
         '
-        Me.ClockwiseToolStripMenuItem.Name = "ClockwiseToolStripMenuItem"
-        Me.ClockwiseToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
-        Me.ClockwiseToolStripMenuItem.Text = "90 Clockwise"
+        Me.tmi90cw.Name = "tmi90cw"
+        Me.tmi90cw.Size = New System.Drawing.Size(188, 22)
+        Me.tmi90cw.Text = "90 Clockwise"
         '
-        'CounterclockwiseToolStripMenuItem
+        'tmi90ccw
         '
-        Me.CounterclockwiseToolStripMenuItem.Name = "CounterclockwiseToolStripMenuItem"
-        Me.CounterclockwiseToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
-        Me.CounterclockwiseToolStripMenuItem.Text = "90 Counter-clockwise"
+        Me.tmi90ccw.Name = "tmi90ccw"
+        Me.tmi90ccw.Size = New System.Drawing.Size(188, 22)
+        Me.tmi90ccw.Text = "90 Counter-clockwise"
         '
-        'DegreesToolStripMenuItem1
+        'tmi180
         '
-        Me.DegreesToolStripMenuItem1.Name = "DegreesToolStripMenuItem1"
-        Me.DegreesToolStripMenuItem1.Size = New System.Drawing.Size(188, 22)
-        Me.DegreesToolStripMenuItem1.Text = "180 Degrees"
+        Me.tmi180.Name = "tmi180"
+        Me.tmi180.Size = New System.Drawing.Size(188, 22)
+        Me.tmi180.Text = "180 Degrees"
         '
         'ImageList1
         '
@@ -271,6 +271,7 @@ Partial Class frmMain
         'sfdOutput
         '
         Me.sfdOutput.DefaultExt = "pdf"
+        Me.sfdOutput.Filter = "PDF Files|*.pdf"
         Me.sfdOutput.Title = "Save Output PDF"
         '
         'frmMain
@@ -319,10 +320,10 @@ Partial Class frmMain
     Friend WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents cmsListView As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents RotationToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents DegreesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ClockwiseToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents CounterclockwiseToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents DegreesToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tmi0 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tmi90cw As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tmi90ccw As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tmi180 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ofdAdd As System.Windows.Forms.OpenFileDialog
     Friend WithEvents bwCombine As System.ComponentModel.BackgroundWorker
     Friend WithEvents sfdOutput As System.Windows.Forms.SaveFileDialog
