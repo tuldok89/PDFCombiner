@@ -23,10 +23,21 @@ Partial Class frmMain
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim ListViewItem2 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem(New String() {"Test Me", "Path"}, 0)
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
         Me.btnHelp = New System.Windows.Forms.Button()
         Me.lvFiles = New System.Windows.Forms.ListView()
+        Me.chFilename = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.chLocation = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.chRotation = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.chFileSize = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.chStatus = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.cmsListView = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.RotationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DegreesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ClockwiseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CounterclockwiseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DegreesToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnExit = New System.Windows.Forms.Button()
         Me.btnCombine = New System.Windows.Forms.Button()
@@ -34,23 +45,14 @@ Partial Class frmMain
         Me.btnDown = New System.Windows.Forms.Button()
         Me.btnUp = New System.Windows.Forms.Button()
         Me.btnAddFiles = New System.Windows.Forms.Button()
-        Me.chFilename = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.chLocation = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.chFileSize = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.chStatus = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
-        Me.chRotation = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.cmsHelp = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ManualToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.cmsListView = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.RotationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DegreesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ClockwiseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CounterclockwiseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DegreesToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.cmsHelp.SuspendLayout()
+        Me.ofdAdd = New System.Windows.Forms.OpenFileDialog()
+        Me.bwCombine = New System.ComponentModel.BackgroundWorker()
+        Me.sfdOutput = New System.Windows.Forms.SaveFileDialog()
         Me.cmsListView.SuspendLayout()
+        Me.cmsHelp.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnHelp
@@ -75,14 +77,80 @@ Partial Class frmMain
         Me.lvFiles.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.chFilename, Me.chLocation, Me.chRotation, Me.chFileSize, Me.chStatus})
         Me.lvFiles.ContextMenuStrip = Me.cmsListView
         Me.lvFiles.FullRowSelect = True
-        Me.lvFiles.Items.AddRange(New System.Windows.Forms.ListViewItem() {ListViewItem2})
         Me.lvFiles.Location = New System.Drawing.Point(12, 85)
+        Me.lvFiles.MultiSelect = False
         Me.lvFiles.Name = "lvFiles"
         Me.lvFiles.Size = New System.Drawing.Size(743, 290)
         Me.lvFiles.SmallImageList = Me.ImageList1
         Me.lvFiles.TabIndex = 3
         Me.lvFiles.UseCompatibleStateImageBehavior = False
         Me.lvFiles.View = System.Windows.Forms.View.Details
+        '
+        'chFilename
+        '
+        Me.chFilename.Text = "Filename"
+        Me.chFilename.Width = 125
+        '
+        'chLocation
+        '
+        Me.chLocation.Text = "Location"
+        Me.chLocation.Width = 150
+        '
+        'chRotation
+        '
+        Me.chRotation.Text = "Rotation"
+        '
+        'chFileSize
+        '
+        Me.chFileSize.Text = "File Size"
+        '
+        'chStatus
+        '
+        Me.chStatus.Text = "Status"
+        Me.chStatus.Width = 200
+        '
+        'cmsListView
+        '
+        Me.cmsListView.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RotationToolStripMenuItem})
+        Me.cmsListView.Name = "cmsListView"
+        Me.cmsListView.Size = New System.Drawing.Size(120, 26)
+        '
+        'RotationToolStripMenuItem
+        '
+        Me.RotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem, Me.ClockwiseToolStripMenuItem, Me.CounterclockwiseToolStripMenuItem, Me.DegreesToolStripMenuItem1})
+        Me.RotationToolStripMenuItem.Name = "RotationToolStripMenuItem"
+        Me.RotationToolStripMenuItem.Size = New System.Drawing.Size(119, 22)
+        Me.RotationToolStripMenuItem.Text = "Rotation"
+        '
+        'DegreesToolStripMenuItem
+        '
+        Me.DegreesToolStripMenuItem.Name = "DegreesToolStripMenuItem"
+        Me.DegreesToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
+        Me.DegreesToolStripMenuItem.Text = "0 Degrees"
+        '
+        'ClockwiseToolStripMenuItem
+        '
+        Me.ClockwiseToolStripMenuItem.Name = "ClockwiseToolStripMenuItem"
+        Me.ClockwiseToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
+        Me.ClockwiseToolStripMenuItem.Text = "90 Clockwise"
+        '
+        'CounterclockwiseToolStripMenuItem
+        '
+        Me.CounterclockwiseToolStripMenuItem.Name = "CounterclockwiseToolStripMenuItem"
+        Me.CounterclockwiseToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
+        Me.CounterclockwiseToolStripMenuItem.Text = "90 Counter-clockwise"
+        '
+        'DegreesToolStripMenuItem1
+        '
+        Me.DegreesToolStripMenuItem1.Name = "DegreesToolStripMenuItem1"
+        Me.DegreesToolStripMenuItem1.Size = New System.Drawing.Size(188, 22)
+        Me.DegreesToolStripMenuItem1.Text = "180 Degrees"
+        '
+        'ImageList1
+        '
+        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList1.Images.SetKeyName(0, "Apps-Adobe-Reader.ico")
         '
         'Label1
         '
@@ -125,7 +193,7 @@ Partial Class frmMain
         Me.btnRemove.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnRemove.AutoSize = True
         Me.btnRemove.Image = Global.PDFCombiner.My.Resources.Resources.minus
-        Me.btnRemove.Location = New System.Drawing.Point(227, 389)
+        Me.btnRemove.Location = New System.Drawing.Point(231, 389)
         Me.btnRemove.Name = "btnRemove"
         Me.btnRemove.Size = New System.Drawing.Size(89, 48)
         Me.btnRemove.TabIndex = 5
@@ -172,35 +240,6 @@ Partial Class frmMain
         Me.btnAddFiles.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.btnAddFiles.UseVisualStyleBackColor = True
         '
-        'chFilename
-        '
-        Me.chFilename.Text = "Filename"
-        Me.chFilename.Width = 125
-        '
-        'chLocation
-        '
-        Me.chLocation.Text = "Location"
-        Me.chLocation.Width = 150
-        '
-        'chFileSize
-        '
-        Me.chFileSize.Text = "File Size"
-        '
-        'chStatus
-        '
-        Me.chStatus.Text = "Status"
-        Me.chStatus.Width = 200
-        '
-        'ImageList1
-        '
-        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
-        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
-        Me.ImageList1.Images.SetKeyName(0, "Apps-Adobe-Reader.ico")
-        '
-        'chRotation
-        '
-        Me.chRotation.Text = "Rotation"
-        '
         'cmsHelp
         '
         Me.cmsHelp.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ManualToolStripMenuItem, Me.AboutToolStripMenuItem})
@@ -219,42 +258,20 @@ Partial Class frmMain
         Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(114, 22)
         Me.AboutToolStripMenuItem.Text = "About"
         '
-        'cmsListView
+        'ofdAdd
         '
-        Me.cmsListView.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RotationToolStripMenuItem})
-        Me.cmsListView.Name = "cmsListView"
-        Me.cmsListView.Size = New System.Drawing.Size(120, 26)
+        Me.ofdAdd.Filter = "PDF files|*.pdf"
+        Me.ofdAdd.Multiselect = True
+        Me.ofdAdd.Title = "Add Files"
         '
-        'RotationToolStripMenuItem
+        'bwCombine
         '
-        Me.RotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem, Me.ClockwiseToolStripMenuItem, Me.CounterclockwiseToolStripMenuItem, Me.DegreesToolStripMenuItem1})
-        Me.RotationToolStripMenuItem.Name = "RotationToolStripMenuItem"
-        Me.RotationToolStripMenuItem.Size = New System.Drawing.Size(119, 22)
-        Me.RotationToolStripMenuItem.Text = "Rotation"
+        Me.bwCombine.WorkerReportsProgress = True
         '
-        'DegreesToolStripMenuItem
+        'sfdOutput
         '
-        Me.DegreesToolStripMenuItem.Name = "DegreesToolStripMenuItem"
-        Me.DegreesToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
-        Me.DegreesToolStripMenuItem.Text = "0 Degrees"
-        '
-        'ClockwiseToolStripMenuItem
-        '
-        Me.ClockwiseToolStripMenuItem.Name = "ClockwiseToolStripMenuItem"
-        Me.ClockwiseToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
-        Me.ClockwiseToolStripMenuItem.Text = "90 Clockwise"
-        '
-        'CounterclockwiseToolStripMenuItem
-        '
-        Me.CounterclockwiseToolStripMenuItem.Name = "CounterclockwiseToolStripMenuItem"
-        Me.CounterclockwiseToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
-        Me.CounterclockwiseToolStripMenuItem.Text = "90 Counter-clockwise"
-        '
-        'DegreesToolStripMenuItem1
-        '
-        Me.DegreesToolStripMenuItem1.Name = "DegreesToolStripMenuItem1"
-        Me.DegreesToolStripMenuItem1.Size = New System.Drawing.Size(188, 22)
-        Me.DegreesToolStripMenuItem1.Text = "180 Degrees"
+        Me.sfdOutput.DefaultExt = "pdf"
+        Me.sfdOutput.Title = "Save Output PDF"
         '
         'frmMain
         '
@@ -264,20 +281,20 @@ Partial Class frmMain
         Me.CancelButton = Me.btnExit
         Me.ClientSize = New System.Drawing.Size(767, 452)
         Me.Controls.Add(Me.btnExit)
-        Me.Controls.Add(Me.btnCombine)
-        Me.Controls.Add(Me.btnRemove)
-        Me.Controls.Add(Me.btnDown)
         Me.Controls.Add(Me.btnUp)
+        Me.Controls.Add(Me.btnCombine)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.lvFiles)
-        Me.Controls.Add(Me.btnHelp)
+        Me.Controls.Add(Me.btnDown)
+        Me.Controls.Add(Me.btnRemove)
         Me.Controls.Add(Me.btnAddFiles)
+        Me.Controls.Add(Me.btnHelp)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmMain"
         Me.Text = "Combine PDF"
-        Me.cmsHelp.ResumeLayout(False)
         Me.cmsListView.ResumeLayout(False)
+        Me.cmsHelp.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -306,5 +323,8 @@ Partial Class frmMain
     Friend WithEvents ClockwiseToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents CounterclockwiseToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DegreesToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ofdAdd As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents bwCombine As System.ComponentModel.BackgroundWorker
+    Friend WithEvents sfdOutput As System.Windows.Forms.SaveFileDialog
 
 End Class
